@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using System.Text.Json;
 
-namespace ConsoleAppTetsBot.org.example.ApiWorker;
+namespace tgBot.org.example.ApiWorker;
 
 public class ApplicationApiWorker
 {

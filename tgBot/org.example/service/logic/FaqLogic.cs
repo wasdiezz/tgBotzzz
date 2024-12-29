@@ -1,7 +1,7 @@
-﻿using ConsoleAppTetsBot.org.example.Buttons;
-using ConsoleAppTetsBot.org.example.statemachine;
+﻿using tgBot.org.example.Buttons;
+using tgBot.org.example.statemachine;
 
-namespace ConsoleAppTetsBot.org.example.service.logic;
+namespace tgBot.org.example.service.logic;
 
 public class FaqLogic
 {
@@ -75,7 +75,7 @@ public class FaqLogic
         {
             transmittedData.State = State.WaitingQuestions;
 
-            textFromUser = "Выберите с чем возникла проблема";
+            textFromUser = "Выберите, с чем возникла проблема:";
 
             return new BotTextMessage(textFromUser, InlineKeyboardsStorage.GetProblemSystemShowKeyboard);
         }
@@ -84,7 +84,7 @@ public class FaqLogic
         {
             transmittedData.State = State.WaitingQuestionsOrApplicationOrHistory;
 
-            textFromUser = "Выберите то что вы хотите";
+            textFromUser = "Здравствуйте! Это техническая поддержка МГОК.\nВыберите действие:";
 
             return new BotTextMessage(textFromUser, InlineKeyboardsStorage.GetStartKeyboard);
         }
@@ -111,7 +111,7 @@ public class FaqLogic
             transmittedData.State = State.WaitingViewProblemComputer;
 
             textFromUser =
-                "Список проблем: \n1. Отсутствует подключение к сети Интернет \n2. Не включается компьютер \n3. Проблема с монитором.";
+                "Вот список часто возникающих проблем: \n1. Отсутствует подключение к сети Интернет \n2. Не включается компьютер \n3. Проблема с монитором.";
 
             return new BotTextMessage(textFromUser, InlineKeyboardsStorage.GetProblemFiveButtonsKeyboard);
         }
@@ -120,7 +120,7 @@ public class FaqLogic
         {
             transmittedData.State = State.WaitingQuestionsOrApplicationOrHistory;
 
-            textFromUser = "Выберите то что вы хотите.";
+            textFromUser = "Здравствуйте! Это техническая поддержка МГОК.\nВыберите действие:";
 
             return new BotTextMessage(textFromUser, InlineKeyboardsStorage.GetStartKeyboard);
         }
@@ -146,7 +146,7 @@ public class FaqLogic
             transmittedData.State = State.WaitingViewProblemComputer;
 
             textFromUser =
-                "Список проблем: \n1. Отсутствует подключение к сети Интернет \n2. Не включается компьютер \n3. Проблема с монитором.";
+                "Вот список часто возникающих проблем: \n1. Отсутствует подключение к сети Интернет \n2. Не включается компьютер \n3. Проблема с монитором.";
 
             return new BotTextMessage(textFromUser, InlineKeyboardsStorage.GetProblemFiveButtonsKeyboard);
         }
@@ -155,7 +155,7 @@ public class FaqLogic
         {
             transmittedData.State = State.WaitingQuestionsOrApplicationOrHistory;
 
-            textFromUser = "Выберите то что вы хотите.";
+            textFromUser = "Здравствуйте! Это техническая поддержка МГОК.\nВыберите действие:";
 
             return new BotTextMessage(textFromUser, InlineKeyboardsStorage.GetStartKeyboard);
         }
@@ -182,7 +182,7 @@ public class FaqLogic
             transmittedData.State = State.WaitingViewProblemComputer;
 
             textFromUser =
-                "Список проблем: \n1. Отсутствует подключение к сети Интернет \n2. Не включается компьютер \n3. Проблема с монитором.";
+                "Вот список часто возникающих проблем: \n1. Отсутствует подключение к сети Интернет \n2. Не включается компьютер \n3. Проблема с монитором.";
 
             return new BotTextMessage(textFromUser, InlineKeyboardsStorage.GetProblemFiveButtonsKeyboard);
         }
@@ -191,7 +191,7 @@ public class FaqLogic
         {
             transmittedData.State = State.WaitingQuestionsOrApplicationOrHistory;
 
-            textFromUser = "Выберите то что вы хотите.";
+            textFromUser = "Здравствуйте! Это техническая поддержка МГОК.\nВыберите действие:";
 
             return new BotTextMessage(textFromUser, InlineKeyboardsStorage.GetStartKeyboard);
         }
@@ -245,7 +245,7 @@ public class FaqLogic
         {
             transmittedData.State = State.WaitingQuestions;
 
-            textFromUser = "Выберите с чем возникла проблема";
+            textFromUser = "Выберите, с чем возникла проблема:";
 
             return new BotTextMessage(textFromUser, InlineKeyboardsStorage.GetProblemSystemShowKeyboard);
         }
@@ -254,7 +254,7 @@ public class FaqLogic
         {
             transmittedData.State = State.WaitingQuestionsOrApplicationOrHistory;
 
-            textFromUser = "Выберите то что вы хотите";
+            textFromUser = "Здравствуйте! Это техническая поддержка МГОК.\nВыберите действие:";
 
             return new BotTextMessage(textFromUser, InlineKeyboardsStorage.GetStartKeyboard);
         }
@@ -279,7 +279,7 @@ public class FaqLogic
         {
             transmittedData.State = State.WaitingViewProblemPrinter;
 
-            textFromUser = "Список проблем: \n1. Не подключается к компьютеру \n2. Замятие бумаги";
+            textFromUser = "Вот список часто возникающих проблем: \n1. Не подключается к компьютеру \n2. Замятие бумаги";
 
             return new BotTextMessage(textFromUser, InlineKeyboardsStorage.GetProblemFoursButtonsKeyboard);
         }
@@ -288,7 +288,7 @@ public class FaqLogic
         {
             transmittedData.State = State.WaitingQuestionsOrApplicationOrHistory;
 
-            textFromUser = "Выберите то что вы хотите.";
+            textFromUser = "Здравствуйте! Это техническая поддержка МГОК.\nВыберите действие:";
 
             return new BotTextMessage(textFromUser, InlineKeyboardsStorage.GetStartKeyboard);
         }
@@ -314,7 +314,7 @@ public class FaqLogic
             transmittedData.State = State.WaitingViewProblemPrinter;
 
             textFromUser =
-                "Список проблем: \n1. Не подключается к компьютеру \n2. Замятие бумаги";
+                "Вот список часто возникающих проблем: \n1. Не подключается к компьютеру \n2. Замятие бумаги";
 
             return new BotTextMessage(textFromUser, InlineKeyboardsStorage.GetProblemFoursButtonsKeyboard);
         }
@@ -323,7 +323,7 @@ public class FaqLogic
         {
             transmittedData.State = State.WaitingQuestionsOrApplicationOrHistory;
 
-            textFromUser = "Выберите то что вы хотите.";
+            textFromUser = "Здравствуйте! Это техническая поддержка МГОК.\nВыберите действие:";
 
             return new BotTextMessage(textFromUser, InlineKeyboardsStorage.GetStartKeyboard);
         }
@@ -385,7 +385,7 @@ public class FaqLogic
         {
             transmittedData.State = State.WaitingQuestions;
 
-            textFromUser = "Выберите с чем возникла проблема";
+            textFromUser = "Выберите, с чем возникла проблема:";
 
             return new BotTextMessage(textFromUser, InlineKeyboardsStorage.GetProblemSystemShowKeyboard);
         }
@@ -394,7 +394,7 @@ public class FaqLogic
         {
             transmittedData.State = State.WaitingQuestionsOrApplicationOrHistory;
 
-            textFromUser = "Выберите то что вы хотите";
+            textFromUser = "Здравствуйте! Это техническая поддержка МГОК.\nВыберите действие:";
 
             return new BotTextMessage(textFromUser, InlineKeyboardsStorage.GetStartKeyboard);
         }
@@ -421,7 +421,7 @@ public class FaqLogic
             transmittedData.State = State.WaitingViewProblemProjector;
 
             textFromUser =
-                "Список проблем: \n1. Не выводится изображение \n2. Проектор не включается \n3. Слишком тусклое изображение.";
+                "Вот список часто возникающих проблем: \n1. Не выводится изображение \n2. Проектор не включается \n3. Слишком тусклое изображение.";
 
             return new BotTextMessage(textFromUser, InlineKeyboardsStorage.GetProblemFiveButtonsKeyboard);
         }
@@ -430,7 +430,7 @@ public class FaqLogic
         {
             transmittedData.State = State.WaitingQuestionsOrApplicationOrHistory;
 
-            textFromUser = "Выберите то что вы хотите.";
+            textFromUser = "Здравствуйте! Это техническая поддержка МГОК.\nВыберите действие:";
 
             return new BotTextMessage(textFromUser, InlineKeyboardsStorage.GetStartKeyboard);
         }
@@ -456,7 +456,7 @@ public class FaqLogic
             transmittedData.State = State.WaitingViewProblemProjector;
 
             textFromUser =
-                "Список проблем: \n1. Не выводится изображение \n2. Проектор не включается \n3. Слишком тусклое изображение.";
+                "Вот список часто возникающих проблем: \n1. Не выводится изображение \n2. Проектор не включается \n3. Слишком тусклое изображение.";
 
             return new BotTextMessage(textFromUser, InlineKeyboardsStorage.GetProblemFiveButtonsKeyboard);
         }
@@ -465,7 +465,7 @@ public class FaqLogic
         {
             transmittedData.State = State.WaitingQuestionsOrApplicationOrHistory;
 
-            textFromUser = "Выберите то что вы хотите.";
+            textFromUser = "Здравствуйте! Это техническая поддержка МГОК.\nВыберите действие:";
 
             return new BotTextMessage(textFromUser, InlineKeyboardsStorage.GetStartKeyboard);
         }
@@ -492,7 +492,7 @@ public class FaqLogic
             transmittedData.State = State.WaitingViewProblemProjector;
 
             textFromUser =
-                "Список проблем: \n1. Не выводится изображение \n2. Проектор не включается \n3. Слишком тусклое изображение.";
+                "Вот список часто возникающих проблем: \n1. Не выводится изображение \n2. Проектор не включается \n3. Слишком тусклое изображение.";
 
             return new BotTextMessage(textFromUser, InlineKeyboardsStorage.GetProblemFiveButtonsKeyboard);
         }
@@ -501,7 +501,7 @@ public class FaqLogic
         {
             transmittedData.State = State.WaitingQuestionsOrApplicationOrHistory;
 
-            textFromUser = "Выберите то что вы хотите.";
+            textFromUser = "Здравствуйте! Это техническая поддержка МГОК.\nВыберите действие:";
 
             return new BotTextMessage(textFromUser, InlineKeyboardsStorage.GetStartKeyboard);
         }

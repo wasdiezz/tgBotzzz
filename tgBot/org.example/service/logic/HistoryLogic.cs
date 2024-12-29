@@ -1,9 +1,8 @@
-﻿using System.Text;
-using ConsoleAppTetsBot.org.example.ApiWorker;
-using ConsoleAppTetsBot.org.example.Buttons;
-using ConsoleAppTetsBot.org.example.statemachine;
+﻿using tgBot.org.example.ApiWorker;
+using tgBot.org.example.Buttons;
+using tgBot.org.example.statemachine;
 
-namespace ConsoleAppTetsBot.org.example.service.logic;
+namespace tgBot.org.example.service.logic;
 
 public class HistoryLogic
 {
@@ -42,7 +41,7 @@ public class HistoryLogic
             textFromUser =
                 $"userId:{currentHistories.UserId}\nid:{currentHistories.Id}\ntitle:{currentHistories.Title}\nbody:{currentHistories.Title}";
 
-            //   textFromUser = $"Заявка номер: {currentHistories.IdHistoryApplication} \nСтатус: {currentHistories.Status} \nАдерс: {currentHistories.Address} \nКабинет: {currentHistories.Cabinet} \nФИО: {currentHistories.Fullname} \nТелефон: {currentHistories.NumberPhone} \nДата создания: {currentHistories.DateTime} \nПроблема: {currentHistories.Description}");
+            //   textFromUser = $"Номер заявки: {currentHistories.IdHistoryApplication} \nСтатус: {currentHistories.Status} \nАдерс: {currentHistories.Address} \nКабинет: {currentHistories.Cabinet} \nФИО: {currentHistories.Fullname} \nТелефон: {currentHistories.NumberPhone} \nДата создания: {currentHistories.DateTime} \nПроблема: {currentHistories.Description}");
 
             if (currentHistoriesLogic == countHistoriesLogic)
             {
@@ -59,7 +58,7 @@ public class HistoryLogic
         {
             transmittedData.State = State.WaitingQuestionsOrApplicationOrHistory;
 
-            textFromUser = "Выберите то что вы хотите.";
+            textFromUser = "Здравствуйте! Это техническая поддержка МГОК.\nВыберите действие:";
 
             return new BotTextMessage(textFromUser, InlineKeyboardsStorage.GetStartKeyboard);
         }
@@ -144,7 +143,7 @@ public class HistoryLogic
         {
             transmittedData.State = State.WaitingQuestionsOrApplicationOrHistory;
 
-            textFromUser = "Выберите то что вы хотите.";
+            textFromUser = "Здравствуйте! Это техническая поддержка МГОК.\nВыберите действие:";
 
             return new BotTextMessage(textFromUser, InlineKeyboardsStorage.GetStartKeyboard);
         }
@@ -198,7 +197,7 @@ public class HistoryLogic
         {
             transmittedData.State = State.WaitingQuestionsOrApplicationOrHistory;
 
-            textFromUser = "Выберите то что вы хотите.";
+            textFromUser = "Здравствуйте! Это техническая поддержка МГОК.\nВыберите действие:";
 
             return new BotTextMessage(textFromUser, InlineKeyboardsStorage.GetStartKeyboard);
         }

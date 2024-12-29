@@ -1,8 +1,8 @@
-﻿using ConsoleAppTetsBot.org.example.service;
-using Telegram.Bot;
+﻿using Telegram.Bot;
 using Telegram.Bot.Types.InputFiles;
+using tgBot.org.example.service;
 
-namespace ConsoleAppTetsBot.org.example.statemachine;
+namespace tgBot.org.example.statemachine;
 
 public class ChatsRouter
 {

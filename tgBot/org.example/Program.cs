@@ -1,4 +1,4 @@
-﻿ using ConsoleAppTetsBot;
+﻿using tgBot;
 
  Bot bot = new Bot();
  bot.Start();

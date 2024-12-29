@@ -1,4 +1,4 @@
-﻿namespace ConsoleAppTetsBot.org.example.Buttons;
+﻿namespace tgBot.org.example.Buttons;
 
 public class InlineButtonsStorage
 {

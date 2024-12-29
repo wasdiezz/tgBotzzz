@@ -1,10 +1,9 @@
 ﻿using System.Text;
-using ConsoleAppTetsBot.org.example.ApiWorker;
-using ConsoleAppTetsBot.org.example.Buttons;
-using ConsoleAppTetsBot.org.example.statemachine;
-using Microsoft.VisualBasic.CompilerServices;
+using tgBot.org.example.ApiWorker;
+using tgBot.org.example.Buttons;
+using tgBot.org.example.statemachine;
 
-namespace ConsoleAppTetsBot.org.example.service.logic;
+namespace tgBot.org.example.service.logic;
 
 public class ApplicationLogic
 {
@@ -25,11 +24,11 @@ public class ApplicationLogic
             return new BotTextMessage("Ошибка ввода номера кабинета. Введите число.");
         }
 
-
         transmittedData.DataStorage.Add("cabinetNumber", textFromUser);
+
         transmittedData.State = State.WaitingInputFullName;
 
-        return new BotTextMessage("Номер кабинета успешно записан. Теперь введите ФИО.");
+        return new BotTextMessage("Номер кабинета успешно сохранен\nТеперь, сообщением отправьте своё ФИО:");
     }
 
     #endregion
@@ -53,7 +52,7 @@ public class ApplicationLogic
 
         transmittedData.State = State.WaitingInputNumberPhone;
 
-        return new BotTextMessage("ФИО успешно записан. Теперь введите номер телефона.");
+        return new BotTextMessage("Ваше ФИО успешно сохранено\nТеперь, введите свой номер телефона:");
     }
 
     #endregion
@@ -72,7 +71,7 @@ public class ApplicationLogic
 
         transmittedData.State = State.WaitingDescriptionProblem;
 
-        return new BotTextMessage("Номер телефона успешно записан. Теперь опишите проблему.");
+        return new BotTextMessage("Номер телефона успешно сохранен\nТеперь, опишите проблему:");
     }
 
     #endregion
@@ -98,7 +97,7 @@ public class ApplicationLogic
 
     #endregion
 
-    #region обработчик нажатия кнопок (хотите ли вы добавить фото), если не добавили фото, то просто выводим данные заявки для верификации.
+    #region обработчик нажатия кнопок "хотите ли вы добавить фото?", если не добавили фото, то просто выводим данные заявки для верификации.
 
     public BotTextMessage ProcessWaitingQuestionAddPhoto(string textFromUser,
         TransmittedData transmittedData)
@@ -122,20 +121,20 @@ public class ApplicationLogic
 
         if (textFromUser.Equals(InlineButtonsStorage.NoSendPhoto.CallBackData))
         {
-            StringBuilder stringBuilder = new StringBuilder("Проверьте данные\n\n");
+            StringBuilder stringBuilder = new StringBuilder("Пожалуйста проверьте правильность данных:\n\n");
 
             stringBuilder.Append("Адрес: ").Append(transmittedData.DataStorage.Get("addressPlace"))
                 .Append("\n");
 
-            stringBuilder.Append("номер кабинета: ").Append(transmittedData.DataStorage.Get("cabinetNumber"))
+            stringBuilder.Append("Номер кабинета: ").Append(transmittedData.DataStorage.Get("cabinetNumber"))
                 .Append("\n");
 
             stringBuilder.Append("ФИО: ").Append(transmittedData.DataStorage.Get("fullName")).Append("\n");
 
-            stringBuilder.Append("номер телефона: ").Append(transmittedData.DataStorage.Get("numberPhone"))
+            stringBuilder.Append("Номер телефона: ").Append(transmittedData.DataStorage.Get("numberPhone"))
                 .Append("\n");
 
-            stringBuilder.Append("описание проблемы: ").Append(transmittedData.DataStorage.Get("descriptionProblem"))
+            stringBuilder.Append("Описание проблемы: ").Append(transmittedData.DataStorage.Get("descriptionProblem"))
                 .Append("\n");
 
             textFromUser = stringBuilder.ToString();
@@ -150,25 +149,26 @@ public class ApplicationLogic
 
     #endregion
 
-    #region обработка фото + показ данных заявки
+    #region обработка фото + верификация данных заявки
 
     public BotTextMessage ProcessWaitingPhoto(string textFromUser,
         TransmittedData transmittedData)
     {
-        StringBuilder stringBuilder = new StringBuilder("Фотография успешно сохранена. Проверьте данные\n\n");
+        StringBuilder stringBuilder =
+            new StringBuilder("Фото успешно прикреплено. Пожалуйста проверьте правильность данных:\n\n");
 
         stringBuilder.Append("Адрес: ").Append(transmittedData.DataStorage.Get("addressPlace"))
             .Append("\n");
 
-        stringBuilder.Append("номер кабинета: ").Append(transmittedData.DataStorage.Get("cabinetNumber"))
+        stringBuilder.Append("Номер кабинета: ").Append(transmittedData.DataStorage.Get("cabinetNumber"))
             .Append("\n");
 
         stringBuilder.Append("ФИО: ").Append(transmittedData.DataStorage.Get("fullName")).Append("\n");
 
-        stringBuilder.Append("номер телефона: ").Append(transmittedData.DataStorage.Get("numberPhone"))
+        stringBuilder.Append("Номер телефона: ").Append(transmittedData.DataStorage.Get("numberPhone"))
             .Append("\n");
 
-        stringBuilder.Append("описание проблемы: ").Append(transmittedData.DataStorage.Get("descriptionProblem"))
+        stringBuilder.Append("Описание проблемы: ").Append(transmittedData.DataStorage.Get("descriptionProblem"))
             .Append("\n");
 
         textFromUser = stringBuilder.ToString();
@@ -180,7 +180,7 @@ public class ApplicationLogic
 
     #endregion
 
-    #region отправка заявки в API + получение id заявки с API
+    #region отправка заявки в API + получение id заявки с API + если нажади "отмена" переходим в начало подачи заявки
 
     public BotTextMessage ProcessWaitingDataVerification(string textFromUser,
         TransmittedData transmittedData)
@@ -212,9 +212,8 @@ public class ApplicationLogic
 
             //long userId = (long)transmittedData.DataStorage.Get("userId");
             //_applicationApiWorker.GetByIdApplication(userId);
-            
-            // textFromUser =
-            //     $"Заявка № 228 успешно создана! Вам придет уведомление, когда статус заявки будет изменен";
+
+            // textFromUser = $"Заявка {application.Id} успешно создана! Вам придет уведомление, когда статус заявки будет изменен.";
 
             textFromUser =
                 $"UserId: {applicationEntity.UserId} \nAddressId: {applicationEntity.AddressId}, \nnumber cabinet: {applicationEntity.NumberCabinet}, \nfullname: {applicationEntity.FullName}, \nnumber phone: {applicationEntity.NumberPhone}, \ndescription problem: {applicationEntity.DescriptionProblem} \nurl photo: {applicationEntity.Photo}";
@@ -228,7 +227,7 @@ public class ApplicationLogic
         {
             transmittedData.State = State.WaitingApplication;
 
-            textFromUser = "Пожалуйста, выберите адрес площадки.";
+            textFromUser = "Пожалуйста, выберите адрес:";
 
             transmittedData.DataStorage.Clear();
 
@@ -240,7 +239,7 @@ public class ApplicationLogic
 
     #endregion
 
-    #region обработчик кнопок для отправки заявки и отмены заявки
+    #region обработка нажатия кнопки главное меню после успешной подачи заявки
 
     public BotTextMessage ProcessWaitingReadApplication(string textFromUser,
         TransmittedData transmittedData)
@@ -256,7 +255,7 @@ public class ApplicationLogic
         {
             transmittedData.State = State.WaitingQuestionsOrApplicationOrHistory;
 
-            textFromUser = "Выберите то что вы хотите.";
+            textFromUser = "Здравствуйте! Это техническая поддержка МГОК.\nВыберите действие:";
 
             return new BotTextMessage(textFromUser, InlineKeyboardsStorage.GetStartKeyboard);
         }

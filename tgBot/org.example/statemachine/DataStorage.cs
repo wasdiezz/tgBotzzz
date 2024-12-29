@@ -1,4 +1,4 @@
-﻿namespace ConsoleAppTetsBot.org.example.statemachine;
+﻿namespace tgBot.org.example.statemachine;
 
 public class DataStorage
 {

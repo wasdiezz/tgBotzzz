@@ -1,9 +1,8 @@
-﻿using System.Text;
-using ConsoleAppTetsBot.org.example.ApiWorker;
-using ConsoleAppTetsBot.org.example.Buttons;
-using ConsoleAppTetsBot.org.example.statemachine;
+﻿using tgBot.org.example.ApiWorker;
+using tgBot.org.example.Buttons;
+using tgBot.org.example.statemachine;
 
-namespace ConsoleAppTetsBot.org.example.service.logic;
+namespace tgBot.org.example.service.logic;
 
 public class StartLogic
 {
@@ -22,15 +21,16 @@ public class StartLogic
     {
         if (textFromUser != "/start")
         {
-            textFromUser =
-                "Здравстуйте! Это теханическая поддержка МГОК.\n \nДанный бот призван упростить взаимодействие преподавателей и Сис админов\n \nБудем рады помочь решить проблему, которая у вас возникла\n \nДля того, чтобы бот начал работу, нажмите /start";
+            textFromUser = "Вас приветствует бот технической поддержки МГОК.\n" +
+                           "Наш бот изучит, поможет в вашей проблеме или же перенаправит задачу на специалиста.\n" +
+                           "Для того, чтобы бот начал работу, введите “/start”.";
 
             return new BotTextMessage(textFromUser);
         }
 
         transmittedData.State = State.WaitingQuestionsOrApplicationOrHistory;
 
-        textFromUser = "Выберите то что вы хотите";
+        textFromUser = "Здравствуйте! Это техническая поддержка МГОК.\nВыберите действие:";
 
         return new BotTextMessage(textFromUser, InlineKeyboardsStorage.GetStartKeyboard);
     }
@@ -56,7 +56,7 @@ public class StartLogic
         {
             transmittedData.State = State.WaitingQuestions;
 
-            textFromUser = "Выберите, с чем возникла проблема";
+            textFromUser = "Выберите, с чем возникла проблема:";
 
             return new BotTextMessage(textFromUser, InlineKeyboardsStorage.GetProblemSystemShowKeyboard);
         }
@@ -65,7 +65,7 @@ public class StartLogic
         {
             transmittedData.State = State.WaitingApplication;
 
-            textFromUser = "Пожалуйста, выберите адрес площадки.";
+            textFromUser = "Пожалуйста, выберите адрес:";
 
             return new BotTextMessage(textFromUser, InlineKeyboardsStorage.GetAddressKeyboard);
         }
@@ -76,7 +76,7 @@ public class StartLogic
 
             if (historyApplications.Count == 0)
             {
-                return new BotTextMessage("Нет истории заявок.", InlineKeyboardsStorage.GetNextShowKeyboard);
+                return new BotTextMessage("История ваших заявок пуста.", InlineKeyboardsStorage.GetNextShowKeyboard);
             }
 
             int countHistoriesLogic = historyApplications.Count();
@@ -122,7 +122,7 @@ public class StartLogic
             transmittedData.State = State.WaitingViewProblemComputer;
 
             textFromUser =
-                "Список проблем: \n1. Отсутствует подключение к сети Интернет \n2. Не включается компьютер \n3. Проблема с монитором.";
+                "Вот список часто возникающих проблем: \n1. Отсутствует подключение к сети Интернет \n2. Не включается компьютер \n3. Проблема с монитором.";
 
             return new BotTextMessage(textFromUser, InlineKeyboardsStorage.GetProblemFiveButtonsKeyboard);
         }
@@ -131,7 +131,8 @@ public class StartLogic
         {
             transmittedData.State = State.WaitingViewProblemPrinter;
 
-            textFromUser = "Список проблем: \n1. Не подключается к компьютеру \n2. Замятие бумаги.";
+            textFromUser =
+                "Вот список часто возникающих проблем: \n1. Не подключается к компьютеру \n2. Замятие бумаги.";
 
             return new BotTextMessage(textFromUser, InlineKeyboardsStorage.GetProblemFoursButtonsKeyboard);
         }
@@ -141,7 +142,7 @@ public class StartLogic
             transmittedData.State = State.WaitingViewProblemProjector;
 
             textFromUser =
-                "Список проблем: \n1. Не выводится изображение \n2. Проектор не включается \n3. Слишком тусклое изображение.";
+                "Вот список часто возникающих проблем: \n1. Не выводится изображение \n2. Проектор не включается \n3. Слишком тусклое изображение.";
 
             return new BotTextMessage(textFromUser, InlineKeyboardsStorage.GetProblemFiveButtonsKeyboard);
         }
@@ -150,7 +151,7 @@ public class StartLogic
         {
             transmittedData.State = State.WaitingQuestionsOrApplicationOrHistory;
 
-            textFromUser = "Выберите то что вы хотите.";
+            textFromUser = "Здравствуйте! Это техническая поддержка МГОК.\nВыберите действие:";
 
             return new BotTextMessage(textFromUser, InlineKeyboardsStorage.GetStartKeyboard);
         }
@@ -160,7 +161,7 @@ public class StartLogic
 
     #endregion
 
-    #region заявка
+    #region заявка на проблему
 
     public BotTextMessage ProcessWaitingApplication(string textFromUser, TransmittedData transmittedData)
     {
@@ -184,7 +185,7 @@ public class StartLogic
 
             transmittedData.DataStorage.Add("addressId", 1);
 
-            textFromUser = "Введите номер кабинета.";
+            textFromUser = "Адрес успешно сохранен\nТеперь, сообщением отправьте номер кабинета:";
 
             return new BotTextMessage(textFromUser);
         }
@@ -197,7 +198,7 @@ public class StartLogic
 
             transmittedData.DataStorage.Add("addressId", 2);
 
-            textFromUser = "Введите номер кабинета.";
+            textFromUser = "Адрес успешно сохранен\nТеперь, сообщением отправьте номер кабинета:";
 
             return new BotTextMessage(textFromUser);
         }
@@ -210,7 +211,7 @@ public class StartLogic
 
             transmittedData.DataStorage.Add("addressId", 3);
 
-            textFromUser = "Введите номер кабинета.";
+            textFromUser = "Адрес успешно сохранен\nТеперь, сообщением отправьте номер кабинета:";
 
             return new BotTextMessage(textFromUser);
         }
@@ -223,7 +224,7 @@ public class StartLogic
 
             transmittedData.DataStorage.Add("addressId", 4);
 
-            textFromUser = "Введите номер кабинета.";
+            textFromUser = "Адрес успешно сохранен\nТеперь, сообщением отправьте номер кабинета:";
 
             return new BotTextMessage(textFromUser);
         }
@@ -236,7 +237,7 @@ public class StartLogic
 
             transmittedData.DataStorage.Add("addressId", 5);
 
-            textFromUser = "Введите номер кабинета.";
+            textFromUser = "Адрес успешно сохранен\nТеперь, сообщением отправьте номер кабинета:";
 
             return new BotTextMessage(textFromUser);
         }
@@ -245,7 +246,7 @@ public class StartLogic
         {
             transmittedData.State = State.WaitingQuestionsOrApplicationOrHistory;
 
-            textFromUser = "Выберите то что вы хотите.";
+            textFromUser = "Здравствуйте! Это техническая поддержка МГОК.\nВыберите действие:";
 
             return new BotTextMessage(textFromUser, InlineKeyboardsStorage.GetStartKeyboard);
         }

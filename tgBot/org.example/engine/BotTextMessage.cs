@@ -1,6 +1,6 @@
 ﻿using Telegram.Bot.Types.ReplyMarkups;
 
-namespace ConsoleAppTetsBot;
+namespace tgBot;
 
 public class BotTextMessage
 {

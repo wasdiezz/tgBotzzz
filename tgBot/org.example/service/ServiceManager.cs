@@ -1,8 +1,7 @@
-﻿using System.Diagnostics.Metrics;
-using ConsoleAppTetsBot.org.example.service.logic;
-using ConsoleAppTetsBot.org.example.statemachine;
+﻿using tgBot.org.example.statemachine;
+using tgBot.org.example.service.logic;
 
-namespace ConsoleAppTetsBot.org.example.service;
+namespace tgBot.org.example.service;
 
 public class ServiceManager
 {

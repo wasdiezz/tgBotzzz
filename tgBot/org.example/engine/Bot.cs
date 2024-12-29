@@ -1,9 +1,9 @@
-﻿using ConsoleAppTetsBot.org.example.statemachine;
+﻿
 using Telegram.Bot;
 using Telegram.Bot.Polling;
 using Telegram.Bot.Types.Enums;
 
-namespace ConsoleAppTetsBot;
+namespace tgBot;
 
 public class Bot
 {

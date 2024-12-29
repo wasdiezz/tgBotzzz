@@ -1,12 +1,11 @@
-﻿using ConsoleAppTetsBot.org.example.statemachine;
-using Telegram.Bot;
+﻿using Telegram.Bot;
 using Telegram.Bot.Exceptions;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.InputFiles;
+using tgBot.org.example.statemachine;
 
-
-namespace ConsoleAppTetsBot;
+namespace tgBot;
 
 public class BotHandlers
 {
@@ -102,6 +101,4 @@ public class BotHandlers
 
         return Task.CompletedTask;
     }
-    
-    
 }

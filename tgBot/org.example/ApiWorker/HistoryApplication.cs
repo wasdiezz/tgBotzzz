@@ -1,7 +1,7 @@
 ﻿using System.Runtime.InteropServices.JavaScript;
 using System.Text.Json.Serialization;
 
-namespace ConsoleAppTetsBot.org.example.ApiWorker;
+namespace tgBot.org.example.ApiWorker;
 
 public class HistoryApplication
 {

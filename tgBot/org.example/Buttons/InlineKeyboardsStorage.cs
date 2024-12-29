@@ -1,6 +1,6 @@
 ﻿using Telegram.Bot.Types.ReplyMarkups;
 
-namespace ConsoleAppTetsBot.org.example.Buttons;
+namespace tgBot.org.example.Buttons;
 
 public class InlineKeyboardsStorage
 {
