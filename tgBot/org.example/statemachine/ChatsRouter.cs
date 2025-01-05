@@ -47,6 +47,10 @@ public class ChatsRouter
                 throw new Exception("Ошибка при обработке фото", ex);
             }
         }
+        else
+        {
+            transmittedData.DataStorage.Add("isNoPhoto", "");
+        }
 
         return _serviceManager.ProcessBotUpdate(textFromUser, transmittedData);
     }

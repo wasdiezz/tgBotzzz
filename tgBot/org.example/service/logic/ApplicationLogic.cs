@@ -8,6 +8,9 @@ namespace tgBot.org.example.service.logic;
 public class ApplicationLogic
 {
     private ApplicationApiWorker _applicationApiWorker;
+    private ApplicationEntity _applicationEntity;
+    private ApplicationEntityWithoutPhoto _applicationEntityWithoutPhoto;
+
     public ApplicationLogic()
     {
         _applicationApiWorker = new ApplicationApiWorker();
@@ -195,11 +198,11 @@ public class ApplicationLogic
         {
             transmittedData.State = State.WaitingReadApplication;
 
-            string imageUrl = transmittedData.DataStorage.Get("imageUrl") as string;
+            //string imageUrl = (string)transmittedData.DataStorage.Get("imageUrl");
 
-            if (!string.IsNullOrEmpty(imageUrl))
+            if (textFromUser.Equals(InlineButtonsStorage.YesSendPhoto.CallBackData))
             {
-                ApplicationEntity applicationEntity = new ApplicationEntity()
+                _applicationEntity = new ApplicationEntity()
                 {
                     UserId = (long)transmittedData.DataStorage.Get("userId"),
                     AddressId = (int)transmittedData.DataStorage.Get("addressId"),
@@ -207,19 +210,19 @@ public class ApplicationLogic
                     FullName = (string)transmittedData.DataStorage.Get("fullName"),
                     NumberPhone = (string)transmittedData.DataStorage.Get("numberPhone"),
                     DescriptionProblem = (string)transmittedData.DataStorage.Get("descriptionProblem"),
-                    Photo = imageUrl
+                    Photo = (string)transmittedData.DataStorage.Get("imageUrl")
                 };
-                
-                _applicationApiWorker.AddNewApplication(applicationEntity);
+
+                _applicationApiWorker.AddNewApplication(_applicationEntity);
 
                 textFromUser =
-                    $"UserId: {applicationEntity.UserId} \nAddressId: {applicationEntity.AddressId}, \nnumber cabinet: {applicationEntity.NumberCabinet}, \nfullname: {applicationEntity.FullName}, \nnumber phone: {applicationEntity.NumberPhone}, \ndescription problem: {applicationEntity.DescriptionProblem} \nurl photo: {applicationEntity.Photo}";
+                    $"UserId: {_applicationEntity.UserId} \nAddressId: {_applicationEntity.AddressId}, \nnumber cabinet: {_applicationEntity.NumberCabinet}, \nfullname: {_applicationEntity.FullName}, \nnumber phone: {_applicationEntity.NumberPhone}, \ndescription problem: {_applicationEntity.DescriptionProblem} \nurl photo: {_applicationEntity.Photo}";
 
                 transmittedData.DataStorage.Clear();
             }
             else
             {
-                ApplicationEntity applicationEntity = new ApplicationEntity()
+                _applicationEntity = new ApplicationEntity()
                 {
                     UserId = (long)transmittedData.DataStorage.Get("userId"),
                     AddressId = (int)transmittedData.DataStorage.Get("addressId"),
@@ -227,16 +230,17 @@ public class ApplicationLogic
                     FullName = (string)transmittedData.DataStorage.Get("fullName"),
                     NumberPhone = (string)transmittedData.DataStorage.Get("numberPhone"),
                     DescriptionProblem = (string)transmittedData.DataStorage.Get("descriptionProblem"),
-                    Photo = ""
+                    Photo = (string)transmittedData.DataStorage.Get("isNoPhoto")
                 };
-                
-                _applicationApiWorker.AddNewApplication(applicationEntity);
+
+                _applicationApiWorker.AddNewApplication(_applicationEntity);
 
                 textFromUser =
-                    $"UserId: {applicationEntity.UserId} \nAddressId: {applicationEntity.AddressId}, \nnumber cabinet: {applicationEntity.NumberCabinet}, \nfullname: {applicationEntity.FullName}, \nnumber phone: {applicationEntity.NumberPhone}, \ndescription problem: {applicationEntity.DescriptionProblem} \nurl photo: {applicationEntity.Photo}";
+                    $"UserId: {_applicationEntity.UserId} \nAddressId: {_applicationEntity.AddressId}, \nnumber cabinet: {_applicationEntity.NumberCabinet}, \nfullname: {_applicationEntity.FullName}, \nnumber phone: {_applicationEntity.NumberPhone}, \ndescription problem: {_applicationEntity.DescriptionProblem} \nurl photo: {_applicationEntity.Photo}";
 
                 transmittedData.DataStorage.Clear();
             }
+            
             //long userId = (long)transmittedData.DataStorage.Get("userId");
             //_applicationApiWorker.GetByIdApplication(userId);
 
