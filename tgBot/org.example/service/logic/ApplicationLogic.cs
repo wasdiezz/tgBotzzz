@@ -198,9 +198,7 @@ public class ApplicationLogic
         {
             transmittedData.State = State.WaitingReadApplication;
 
-            //string imageUrl = (string)transmittedData.DataStorage.Get("imageUrl");
-
-            if (textFromUser.Equals(InlineButtonsStorage.YesSendPhoto.CallBackData))
+            if (!textFromUser.Equals(InlineButtonsStorage.YesSendPhoto.CallBackData))
             {
                 _applicationEntity = new ApplicationEntity()
                 {
@@ -222,7 +220,7 @@ public class ApplicationLogic
             }
             else
             {
-                _applicationEntity = new ApplicationEntity()
+                _applicationEntityWithoutPhoto = new ApplicationEntityWithoutPhoto()
                 {
                     UserId = (long)transmittedData.DataStorage.Get("userId"),
                     AddressId = (int)transmittedData.DataStorage.Get("addressId"),
@@ -233,10 +231,10 @@ public class ApplicationLogic
                     Photo = (string)transmittedData.DataStorage.Get("isNoPhoto")
                 };
 
-                _applicationApiWorker.AddNewApplication(_applicationEntity);
+                _applicationApiWorker.AddNewApplicationWithoutPhoto(_applicationEntityWithoutPhoto);
 
                 textFromUser =
-                    $"UserId: {_applicationEntity.UserId} \nAddressId: {_applicationEntity.AddressId}, \nnumber cabinet: {_applicationEntity.NumberCabinet}, \nfullname: {_applicationEntity.FullName}, \nnumber phone: {_applicationEntity.NumberPhone}, \ndescription problem: {_applicationEntity.DescriptionProblem} \nurl photo: {_applicationEntity.Photo}";
+                    $"UserId: {_applicationEntityWithoutPhoto.UserId} \nAddressId: {_applicationEntityWithoutPhoto.AddressId}, \nnumber cabinet: {_applicationEntityWithoutPhoto.NumberCabinet}, \nfullname: {_applicationEntityWithoutPhoto.FullName}, \nnumber phone: {_applicationEntityWithoutPhoto.NumberPhone}, \ndescription problem: {_applicationEntityWithoutPhoto.DescriptionProblem} \nurl photo: {_applicationEntityWithoutPhoto.Photo}";
 
                 transmittedData.DataStorage.Clear();
             }

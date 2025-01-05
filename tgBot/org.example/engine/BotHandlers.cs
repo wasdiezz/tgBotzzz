@@ -22,7 +22,7 @@ public class BotHandlers
         long chatId = 0;
         int messageId = 0;
         string textFromUser = "";
-        InputOnlineFile? photo = null;
+        PhotoSize[]? photo = null;
         bool canRoute = false;
 
         switch (update.Type)
@@ -38,7 +38,7 @@ public class BotHandlers
 
                 if (update.Message.Type == MessageType.Photo)
                 {
-                    photo = new InputOnlineFile(update.Message.Photo[^1].FileId);
+                    photo = update.Message.Photo;
                     textFromUser = "";
                 }
 

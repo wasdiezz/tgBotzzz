@@ -1,4 +1,5 @@
 ﻿using Telegram.Bot;
+using Telegram.Bot.Types;
 using Telegram.Bot.Types.InputFiles;
 using tgBot.org.example.service;
 
@@ -8,7 +9,10 @@ public class ChatsRouter
 {
     private Dictionary<long, TransmittedData> _routings;
     private ServiceManager _serviceManager;
+    
+    
     private readonly TelegramBotClient _botClient;
+    private static readonly string token = "8108328648:AAEc9MytfhK1aypmrQ__MUVBteFljBbo9zs";
 
     public ChatsRouter()
     {
@@ -17,7 +21,7 @@ public class ChatsRouter
         _serviceManager = new ServiceManager();
     }
 
-    public async Task<BotTextMessage> Route(long chatId, string textFromUser, InputOnlineFile? photo = null)
+    public async Task<BotTextMessage> Route(long chatId, string textFromUser, PhotoSize[]? photo = null)
     {
         if (!_routings.ContainsKey(chatId))
         {
@@ -32,15 +36,12 @@ public class ChatsRouter
         {
             try
             {
-                var fileInfo = await _botClient.GetFileAsync(photo.FileId);
+                var fileId = photo[photo.Length - 1].FileId;
+                var file = await _botClient.GetFileAsync(fileId);
 
-                if (fileInfo != null)
-                {
-                    string fileUrl =
-                        $"https://api.telegram.org/file/bot{_botClient}/{fileInfo.FilePath}";
+                var fileUrl = $"https://api.telegram.org/file/bot{token}/{file.FilePath}";
 
-                    transmittedData.DataStorage.Add("imageUrl", fileUrl);
-                }
+                transmittedData.DataStorage.Add("imageUrl", fileUrl);
             }
             catch (Exception ex)
             {
