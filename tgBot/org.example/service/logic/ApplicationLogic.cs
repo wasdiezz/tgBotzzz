@@ -8,8 +8,6 @@ namespace tgBot.org.example.service.logic;
 public class ApplicationLogic
 {
     private ApplicationApiWorker _applicationApiWorker;
-    private ApplicationEntity _applicationEntity;
-    private ApplicationEntityWithoutPhoto _applicationEntityWithoutPhoto;
 
     public ApplicationLogic()
     {
@@ -24,6 +22,12 @@ public class ApplicationLogic
         if (string.IsNullOrEmpty(textFromUser))
         {
             return new BotTextMessage("Ошибка ввода номера кабинета. Введите число.");
+        }
+
+        if (textFromUser.Length > 50)
+        {
+            return new BotTextMessage(
+                "Ошибка. Максимальная длина номера кабинета 50 символов. Пожалуйста, введите номер кабинета заново.");
         }
 
         transmittedData.DataStorage.Add("cabinetNumber", textFromUser);
@@ -45,7 +49,7 @@ public class ApplicationLogic
             return new BotTextMessage("Пожалуйста, введите ФИО.");
         }
 
-        if (textFromUser.Length > 100)
+        if (textFromUser.Length > 150)
         {
             return new BotTextMessage("Ошибка. Максимальная длина ФИО 100 символов. Пожалуйста, введите ФИО заново.");
         }
@@ -69,6 +73,12 @@ public class ApplicationLogic
             return new BotTextMessage("Пожалуйста, введите номер телефона.");
         }
 
+        if (textFromUser.Length > 50)
+        {
+            return new BotTextMessage(
+                "Ошибка. Максимальная длина номера телефона 50 символов. Пожалуйста, введите номер телефона заново.");
+        }
+
         transmittedData.DataStorage.Add("numberPhone", textFromUser);
 
         transmittedData.State = State.WaitingDescriptionProblem;
@@ -88,6 +98,12 @@ public class ApplicationLogic
             return new BotTextMessage("Ошибка. Не может быть пустое сообщение.");
         }
 
+        if (textFromUser.Length > 100)
+        {
+            return new BotTextMessage(
+                "Ошибка. Максимальная длина для опсиания проблемы 100 символов. Пожалуйста, введите описание проблемы заново.");
+        }
+
         transmittedData.DataStorage.Add("descriptionProblem", textFromUser);
 
         transmittedData.State = State.WaitingQuestionAddPhoto;
@@ -98,7 +114,6 @@ public class ApplicationLogic
     }
 
     #endregion
-
     #region обработчик нажатия кнопок "хотите ли вы добавить фото?", если не добавили фото, то просто выводим данные заявки для верификации.
 
     public BotTextMessage ProcessWaitingQuestionAddPhoto(string textFromUser,
@@ -114,6 +129,11 @@ public class ApplicationLogic
 
         if (textFromUser.Equals(InlineButtonsStorage.YesSendPhoto.CallBackData))
         {
+            if (string.IsNullOrEmpty(textFromUser))
+            {
+                return new BotTextMessage("Сообщение не может быть пустое, отправьте фотографию");
+            }
+
             transmittedData.State = State.WaitingPhoto;
 
             textFromUser = "Отправьте фото, чтобы прикрепить его к заявке";
@@ -141,7 +161,7 @@ public class ApplicationLogic
 
             textFromUser = stringBuilder.ToString();
 
-            transmittedData.State = State.WaitingDataVerification;
+            transmittedData.State = State.WaitingDataVerificationWithoutPhoto;
 
             return new BotTextMessage(textFromUser, InlineKeyboardsStorage.GetVerificationDataKeyboard);
         }
@@ -181,7 +201,7 @@ public class ApplicationLogic
 
     #endregion
 
-    #region отправка заявки в API + получение id заявки с API + если нажади "отмена" переходим в начало подачи заявки
+    #region отправка в апи с фоткой заявки
 
     public BotTextMessage ProcessWaitingDataVerification(string textFromUser,
         TransmittedData transmittedData)
@@ -198,47 +218,24 @@ public class ApplicationLogic
         {
             transmittedData.State = State.WaitingReadApplication;
 
-            if (!textFromUser.Equals(InlineButtonsStorage.YesSendPhoto.CallBackData))
+            ApplicationEntity applicationEntity = new ApplicationEntity()
             {
-                _applicationEntity = new ApplicationEntity()
-                {
-                    UserId = (long)transmittedData.DataStorage.Get("userId"),
-                    AddressId = (int)transmittedData.DataStorage.Get("addressId"),
-                    NumberCabinet = (string)transmittedData.DataStorage.Get("cabinetNumber"),
-                    FullName = (string)transmittedData.DataStorage.Get("fullName"),
-                    NumberPhone = (string)transmittedData.DataStorage.Get("numberPhone"),
-                    DescriptionProblem = (string)transmittedData.DataStorage.Get("descriptionProblem"),
-                    Photo = (string)transmittedData.DataStorage.Get("imageUrl")
-                };
+                UserId = (long)transmittedData.DataStorage.Get("userId"),
+                AddressId = (int)transmittedData.DataStorage.Get("addressId"),
+                NumberCabinet = (string)transmittedData.DataStorage.Get("cabinetNumber"),
+                FullName = (string)transmittedData.DataStorage.Get("fullName"),
+                NumberPhone = (string)transmittedData.DataStorage.Get("numberPhone"),
+                DescriptionProblem = (string)transmittedData.DataStorage.Get("descriptionProblem"),
+                Photo = (string)transmittedData.DataStorage.Get("imageUrl")
+            };
 
-                _applicationApiWorker.AddNewApplication(_applicationEntity);
+            _applicationApiWorker.AddNewApplication(applicationEntity);
 
-                textFromUser =
-                    $"UserId: {_applicationEntity.UserId} \nAddressId: {_applicationEntity.AddressId}, \nnumber cabinet: {_applicationEntity.NumberCabinet}, \nfullname: {_applicationEntity.FullName}, \nnumber phone: {_applicationEntity.NumberPhone}, \ndescription problem: {_applicationEntity.DescriptionProblem} \nurl photo: {_applicationEntity.Photo}";
+            textFromUser =
+                $"UserId: {applicationEntity.UserId} \nAddressId: {applicationEntity.AddressId}, \nnumber cabinet: {applicationEntity.NumberCabinet}, \nfullname: {applicationEntity.FullName}, \nnumber phone: {applicationEntity.NumberPhone}, \ndescription problem: {applicationEntity.DescriptionProblem} \nurl photo: {applicationEntity.Photo}";
 
-                transmittedData.DataStorage.Clear();
-            }
-            else
-            {
-                _applicationEntityWithoutPhoto = new ApplicationEntityWithoutPhoto()
-                {
-                    UserId = (long)transmittedData.DataStorage.Get("userId"),
-                    AddressId = (int)transmittedData.DataStorage.Get("addressId"),
-                    NumberCabinet = (string)transmittedData.DataStorage.Get("cabinetNumber"),
-                    FullName = (string)transmittedData.DataStorage.Get("fullName"),
-                    NumberPhone = (string)transmittedData.DataStorage.Get("numberPhone"),
-                    DescriptionProblem = (string)transmittedData.DataStorage.Get("descriptionProblem"),
-                    Photo = (string)transmittedData.DataStorage.Get("isNoPhoto")
-                };
+            transmittedData.DataStorage.Clear();
 
-                _applicationApiWorker.AddNewApplicationWithoutPhoto(_applicationEntityWithoutPhoto);
-
-                textFromUser =
-                    $"UserId: {_applicationEntityWithoutPhoto.UserId} \nAddressId: {_applicationEntityWithoutPhoto.AddressId}, \nnumber cabinet: {_applicationEntityWithoutPhoto.NumberCabinet}, \nfullname: {_applicationEntityWithoutPhoto.FullName}, \nnumber phone: {_applicationEntityWithoutPhoto.NumberPhone}, \ndescription problem: {_applicationEntityWithoutPhoto.DescriptionProblem} \nurl photo: {_applicationEntityWithoutPhoto.Photo}";
-
-                transmittedData.DataStorage.Clear();
-            }
-            
             //long userId = (long)transmittedData.DataStorage.Get("userId");
             //_applicationApiWorker.GetByIdApplication(userId);
 
@@ -261,6 +258,64 @@ public class ApplicationLogic
         return new BotTextMessage(textFromUser);
     }
 
+    #endregion
+    
+    #region отправка в апи без фотки заявки
+    public BotTextMessage ProcessWaitingDataVerificationWithoutPhoto(string textFromUser,
+        TransmittedData transmittedData)
+    {
+        if (!textFromUser.Equals(InlineButtonsStorage.SendApplication.CallBackData) &&
+            !textFromUser.Equals(InlineButtonsStorage.CancelApplication.CallBackData))
+        {
+            textFromUser = "Ошибка. Нажмите на кнопку.";
+
+            return new BotTextMessage(textFromUser);
+        }
+
+        if (textFromUser.Equals(InlineButtonsStorage.SendApplication.CallBackData))
+        {
+            transmittedData.State = State.WaitingReadApplication;
+
+            ApplicationEntity applicationEntity = new ApplicationEntity()
+            {
+                UserId = (long)transmittedData.DataStorage.Get("userId"),
+                AddressId = (int)transmittedData.DataStorage.Get("addressId"),
+                NumberCabinet = (string)transmittedData.DataStorage.Get("cabinetNumber"),
+                FullName = (string)transmittedData.DataStorage.Get("fullName"),
+                NumberPhone = (string)transmittedData.DataStorage.Get("numberPhone"),
+                DescriptionProblem = (string)transmittedData.DataStorage.Get("descriptionProblem"),
+                Photo = (string)transmittedData.DataStorage.Get("isNoPhoto")
+            };
+
+            _applicationApiWorker.AddNewApplication(applicationEntity);
+
+            textFromUser =
+                $"UserId: {applicationEntity.UserId} \nAddressId: {applicationEntity.AddressId}, \nnumber cabinet: {applicationEntity.NumberCabinet}, \nfullname: {applicationEntity.FullName}, \nnumber phone: {applicationEntity.NumberPhone}, \ndescription problem: {applicationEntity.DescriptionProblem} \nurl photo: {applicationEntity.Photo}";
+
+            //long userId = (long)transmittedData.DataStorage.Get("userId");
+            //_applicationApiWorker.GetByIdApplication(userId);
+
+            // textFromUser = $"Заявка {application.Id} успешно создана! Вам придет уведомление, когда статус заявки будет изменен.";
+
+            transmittedData.DataStorage.Clear();
+
+            return new BotTextMessage(textFromUser, InlineKeyboardsStorage.GetBackToMenuKeyboard);
+        }
+
+        if (textFromUser.Equals(InlineButtonsStorage.CancelApplication.CallBackData))
+        {
+            transmittedData.State = State.WaitingApplication;
+
+            textFromUser = "Пожалуйста, выберите адрес:";
+
+            transmittedData.DataStorage.Clear();
+
+            return new BotTextMessage(textFromUser, InlineKeyboardsStorage.GetAddressKeyboard);
+        }
+
+        return new BotTextMessage(textFromUser);
+    }
+    
     #endregion
 
     #region обработка нажатия кнопки главное меню после успешной подачи заявки

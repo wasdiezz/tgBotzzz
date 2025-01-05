@@ -29,22 +29,7 @@ public class ApplicationApiWorker
 
         return addedFakePost;
     }
-
-    public ApplicationEntityWithoutPhoto AddNewApplicationWithoutPhoto(ApplicationEntityWithoutPhoto insertFakePost)
-    {
-        HttpClient httpClient = new HttpClient();
-        string insertFakePostAsJson = JsonSerializer.Serialize(insertFakePost);
-
-        HttpContent httpContent = new StringContent(insertFakePostAsJson, Encoding.UTF8, "application/json");
-
-        string addedFakePostAsJson = httpClient.PostAsync("https://jsonplaceholder.typicode.com/posts", httpContent)
-            .Result.Content.ReadAsStringAsync().Result;
-
-        ApplicationEntityWithoutPhoto addedFakePost = JsonSerializer.Deserialize<ApplicationEntityWithoutPhoto>(addedFakePostAsJson);
-
-        return addedFakePost;
-    }
-
+    
     public List<HistoryApplication> GetByAllApplication()
     {
         HttpClient httpClient = new HttpClient();

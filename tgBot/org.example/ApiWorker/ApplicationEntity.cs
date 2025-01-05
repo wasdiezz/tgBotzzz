@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace tgBot.org.example.ApiWorker;
+﻿namespace tgBot.org.example.ApiWorker;
 
 public class ApplicationEntity
 {

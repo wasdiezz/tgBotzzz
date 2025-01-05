@@ -28,7 +28,7 @@ public enum State
     WaitingSecondInfoProblemPrinter,
 
     #endregion
-    
+
     #region просмотр проектора
 
     WaitingViewProblemProjector,
@@ -47,6 +47,7 @@ public enum State
     WaitingQuestionAddPhoto,
     WaitingPhoto,
     WaitingDataVerification,
+    WaitingDataVerificationWithoutPhoto,
     WaitingReadApplication,
 
     #endregion

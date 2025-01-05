@@ -78,7 +78,7 @@ public class StartLogic
 
             if (historyApplications.Count == 0)
             {
-                return new BotTextMessage("История ваших заявок пуста.", InlineKeyboardsStorage.GetNextShowKeyboard);
+                return new BotTextMessage("История ваших заявок пуста.", InlineKeyboardsStorage.GetBackToMenuKeyboard);
             }
 
             int countHistoriesLogic = historyApplications.Count();

@@ -71,6 +71,7 @@ public class ServiceManager
         _methods.Add(State.WaitingQuestionAddPhoto, _applicationLogic.ProcessWaitingQuestionAddPhoto);
         _methods.Add(State.WaitingPhoto, _applicationLogic.ProcessWaitingPhoto);
         _methods.Add(State.WaitingDataVerification, _applicationLogic.ProcessWaitingDataVerification);
+        _methods.Add(State.WaitingDataVerificationWithoutPhoto, _applicationLogic.ProcessWaitingDataVerificationWithoutPhoto);
         _methods.Add(State.WaitingReadApplication, _applicationLogic.ProcessWaitingReadApplication);
 
         #endregion
