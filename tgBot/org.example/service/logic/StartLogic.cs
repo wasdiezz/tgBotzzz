@@ -72,6 +72,8 @@ public class StartLogic
 
         if (textFromUser.Equals(InlineButtonsStorage.SubmitHistory.CallBackData))
         {
+            long userId = (long)transmittedData.DataStorage.Get("userId");
+
             List<HistoryApplication> historyApplications = _applicationApiWorker.GetByAllApplication();
 
             if (historyApplications.Count == 0)

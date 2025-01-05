@@ -12,6 +12,7 @@ public class ChatsRouter
 
     public ChatsRouter()
     {
+        _botClient = new TelegramBotClient("8108328648:AAEc9MytfhK1aypmrQ__MUVBteFljBbo9zs");
         _routings = new Dictionary<long, TransmittedData>();
         _serviceManager = new ServiceManager();
     }
@@ -29,9 +30,22 @@ public class ChatsRouter
 
         if (photo != null)
         {
-            var urlImage = await _botClient.GetFileAsync(photo.FileId);
-            // string fileId = inputOnlineFile.FileId;
-            transmittedData.DataStorage.Add("imageUrl", urlImage);
+            try
+            {
+                var fileInfo = await _botClient.GetFileAsync(photo.FileId);
+
+                if (fileInfo != null)
+                {
+                    string fileUrl =
+                        $"https://api.telegram.org/file/bot{_botClient}/{fileInfo.FilePath}";
+
+                    transmittedData.DataStorage.Add("imageUrl", fileUrl);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Ошибка при обработке фото", ex);
+            }
         }
 
         return _serviceManager.ProcessBotUpdate(textFromUser, transmittedData);

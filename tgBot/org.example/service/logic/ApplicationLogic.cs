@@ -8,7 +8,6 @@ namespace tgBot.org.example.service.logic;
 public class ApplicationLogic
 {
     private ApplicationApiWorker _applicationApiWorker;
-
     public ApplicationLogic()
     {
         _applicationApiWorker = new ApplicationApiWorker();
@@ -151,8 +150,7 @@ public class ApplicationLogic
 
     #region обработка фото + верификация данных заявки
 
-    public BotTextMessage ProcessWaitingPhoto(string textFromUser,
-        TransmittedData transmittedData)
+    public BotTextMessage ProcessWaitingPhoto(string textFromUser, TransmittedData transmittedData)
     {
         StringBuilder stringBuilder =
             new StringBuilder("Фото успешно прикреплено. Пожалуйста проверьте правильность данных:\n\n");
@@ -197,28 +195,52 @@ public class ApplicationLogic
         {
             transmittedData.State = State.WaitingReadApplication;
 
-            ApplicationEntity applicationEntity = new ApplicationEntity()
+            string imageUrl = transmittedData.DataStorage.Get("imageUrl") as string;
+
+            if (!string.IsNullOrEmpty(imageUrl))
             {
-                UserId = (long)transmittedData.DataStorage.Get("userId"),
-                AddressId = (int)transmittedData.DataStorage.Get("addressId"),
-                NumberCabinet = (string)transmittedData.DataStorage.Get("cabinetNumber"),
-                FullName = (string)transmittedData.DataStorage.Get("fullName"),
-                NumberPhone = (string)transmittedData.DataStorage.Get("numberPhone"),
-                DescriptionProblem = (string)transmittedData.DataStorage.Get("descriptionProblem"),
-                Photo = (string)transmittedData.DataStorage.Get("imageUrl"),
-            };
+                ApplicationEntity applicationEntity = new ApplicationEntity()
+                {
+                    UserId = (long)transmittedData.DataStorage.Get("userId"),
+                    AddressId = (int)transmittedData.DataStorage.Get("addressId"),
+                    NumberCabinet = (string)transmittedData.DataStorage.Get("cabinetNumber"),
+                    FullName = (string)transmittedData.DataStorage.Get("fullName"),
+                    NumberPhone = (string)transmittedData.DataStorage.Get("numberPhone"),
+                    DescriptionProblem = (string)transmittedData.DataStorage.Get("descriptionProblem"),
+                    Photo = imageUrl
+                };
+                
+                _applicationApiWorker.AddNewApplication(applicationEntity);
 
-            _applicationApiWorker.AddNewApplication(applicationEntity);
+                textFromUser =
+                    $"UserId: {applicationEntity.UserId} \nAddressId: {applicationEntity.AddressId}, \nnumber cabinet: {applicationEntity.NumberCabinet}, \nfullname: {applicationEntity.FullName}, \nnumber phone: {applicationEntity.NumberPhone}, \ndescription problem: {applicationEntity.DescriptionProblem} \nurl photo: {applicationEntity.Photo}";
 
+                transmittedData.DataStorage.Clear();
+            }
+            else
+            {
+                ApplicationEntity applicationEntity = new ApplicationEntity()
+                {
+                    UserId = (long)transmittedData.DataStorage.Get("userId"),
+                    AddressId = (int)transmittedData.DataStorage.Get("addressId"),
+                    NumberCabinet = (string)transmittedData.DataStorage.Get("cabinetNumber"),
+                    FullName = (string)transmittedData.DataStorage.Get("fullName"),
+                    NumberPhone = (string)transmittedData.DataStorage.Get("numberPhone"),
+                    DescriptionProblem = (string)transmittedData.DataStorage.Get("descriptionProblem"),
+                    Photo = ""
+                };
+                
+                _applicationApiWorker.AddNewApplication(applicationEntity);
+
+                textFromUser =
+                    $"UserId: {applicationEntity.UserId} \nAddressId: {applicationEntity.AddressId}, \nnumber cabinet: {applicationEntity.NumberCabinet}, \nfullname: {applicationEntity.FullName}, \nnumber phone: {applicationEntity.NumberPhone}, \ndescription problem: {applicationEntity.DescriptionProblem} \nurl photo: {applicationEntity.Photo}";
+
+                transmittedData.DataStorage.Clear();
+            }
             //long userId = (long)transmittedData.DataStorage.Get("userId");
             //_applicationApiWorker.GetByIdApplication(userId);
 
             // textFromUser = $"Заявка {application.Id} успешно создана! Вам придет уведомление, когда статус заявки будет изменен.";
-
-            textFromUser =
-                $"UserId: {applicationEntity.UserId} \nAddressId: {applicationEntity.AddressId}, \nnumber cabinet: {applicationEntity.NumberCabinet}, \nfullname: {applicationEntity.FullName}, \nnumber phone: {applicationEntity.NumberPhone}, \ndescription problem: {applicationEntity.DescriptionProblem} \nurl photo: {applicationEntity.Photo}";
-
-            transmittedData.DataStorage.Clear();
 
             return new BotTextMessage(textFromUser, InlineKeyboardsStorage.GetBackToMenuKeyboard);
         }

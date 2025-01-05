@@ -22,7 +22,7 @@ public class BotHandlers
         long chatId = 0;
         int messageId = 0;
         string textFromUser = "";
-        InputOnlineFile photo = null;
+        InputOnlineFile? photo = null;
         bool canRoute = false;
 
         switch (update.Type)
