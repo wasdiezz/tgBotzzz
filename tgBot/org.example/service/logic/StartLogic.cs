@@ -6,13 +6,13 @@ namespace tgBot.org.example.service.logic;
 
 public class StartLogic
 {
-    private HistoryApplication _historyApplication;
-    private ApplicationApiWorker _applicationApiWorker;
+    private History _history;
+    private ApiWorker.ApiWorker _apiWorker;
 
     public StartLogic()
     {
-        _historyApplication = new HistoryApplication();
-        _applicationApiWorker = new ApplicationApiWorker();
+        _history = new History();
+        _apiWorker = new ApiWorker.ApiWorker();
     }
 
     #region старт
@@ -74,7 +74,7 @@ public class StartLogic
         {
             long userId = (long)transmittedData.DataStorage.Get("userId");
 
-            List<HistoryApplication> historyApplications = _applicationApiWorker.GetByAllApplication();
+            List<History> historyApplications = _apiWorker.GetByAllApplication();
 
             if (historyApplications.Count == 0)
             {
@@ -88,7 +88,7 @@ public class StartLogic
             transmittedData.DataStorage.Add("countHistoriesLogic", countHistoriesLogic);
             transmittedData.DataStorage.Add("currentHistoriesLogic", currentHistoriesLogic);
 
-            HistoryApplication currentHistories = historyApplications[currentHistoriesLogic - 1];
+            History currentHistories = historyApplications[currentHistoriesLogic - 1];
 
             textFromUser =
                 $"userId:{currentHistories.UserId}\nid:{currentHistories.Id}\ntitle:{currentHistories.Title}\nbody:{currentHistories.Title}";

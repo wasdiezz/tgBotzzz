@@ -6,11 +6,11 @@ namespace tgBot.org.example.service.logic;
 
 public class HistoryLogic
 {
-    private HistoryApplication _historyApplication;
+    private History _history;
 
     public HistoryLogic()
     {
-        _historyApplication = new HistoryApplication();
+        _history = new History();
     }
 
     public BotTextMessage ProcessWaitingShowHistory(string textFromUser, TransmittedData transmittedData)
@@ -26,8 +26,8 @@ public class HistoryLogic
 
         if (textFromUser.Equals(InlineButtonsStorage.Next.CallBackData))
         {
-            List<HistoryApplication> historyApplications =
-                (List<HistoryApplication>)transmittedData.DataStorage.Get("historyApplications");
+            List<History> historyApplications =
+                (List<History>)transmittedData.DataStorage.Get("historyApplications");
 
             int countHistoriesLogic = (int)transmittedData.DataStorage.Get("countHistoriesLogic");
             int currentHistoriesLogic = (int)transmittedData.DataStorage.Get("currentHistoriesLogic");
@@ -36,7 +36,7 @@ public class HistoryLogic
 
             transmittedData.DataStorage.Add("currentHistoriesLogic", currentHistoriesLogic);
 
-            HistoryApplication currentHistories = historyApplications[currentHistoriesLogic - 1];
+            History currentHistories = historyApplications[currentHistoriesLogic - 1];
 
             textFromUser =
                 $"userId:{currentHistories.UserId}\nid:{currentHistories.Id}\ntitle:{currentHistories.Title}\nbody:{currentHistories.Title}";
@@ -79,8 +79,8 @@ public class HistoryLogic
 
         if (textFromUser.Equals(InlineButtonsStorage.Next.CallBackData))
         {
-            List<HistoryApplication> historyApplications =
-                (List<HistoryApplication>)transmittedData.DataStorage.Get("historyApplications");
+            List<History> historyApplications =
+                (List<History>)transmittedData.DataStorage.Get("historyApplications");
 
             int countHistoriesLogic = (int)transmittedData.DataStorage.Get("countHistoriesLogic");
             int currentHistoriesLogic = (int)transmittedData.DataStorage.Get("currentHistoriesLogic");
@@ -89,7 +89,7 @@ public class HistoryLogic
 
             transmittedData.DataStorage.Add("currentHistoriesLogic", currentHistoriesLogic);
 
-            HistoryApplication currentHistories = historyApplications[currentHistoriesLogic - 1];
+            History currentHistories = historyApplications[currentHistoriesLogic - 1];
 
             textFromUser =
                 $"userId:{currentHistories.UserId}\nid:{currentHistories.Id}\ntitle:{currentHistories.Title}\nbody:{currentHistories.Title}";
@@ -110,8 +110,8 @@ public class HistoryLogic
 
         if (textFromUser.Equals(InlineButtonsStorage.Back.CallBackData))
         {
-            List<HistoryApplication> historyApplications =
-                (List<HistoryApplication>)transmittedData.DataStorage.Get("historyApplications");
+            List<History> historyApplications =
+                (List<History>)transmittedData.DataStorage.Get("historyApplications");
 
             int countHistoriesLogic = (int)transmittedData.DataStorage.Get("countHistoriesLogic");
             int currentHistoriesLogic = (int)transmittedData.DataStorage.Get("currentHistoriesLogic");
@@ -120,7 +120,7 @@ public class HistoryLogic
 
             transmittedData.DataStorage.Add("currentHistoriesLogic", currentHistoriesLogic);
 
-            HistoryApplication currentHistories = historyApplications[currentHistoriesLogic - 1];
+            History currentHistories = historyApplications[currentHistoriesLogic - 1];
 
             textFromUser =
                 $"userId:{currentHistories.UserId}\nid:{currentHistories.Id}\ntitle:{currentHistories.Title}\nbody:{currentHistories.Body}";
@@ -163,8 +163,8 @@ public class HistoryLogic
 
         if (textFromUser.Equals(InlineButtonsStorage.Back.CallBackData))
         {
-            List<HistoryApplication> historyApplications =
-                (List<HistoryApplication>)transmittedData.DataStorage.Get("historyApplications");
+            List<History> historyApplications =
+                (List<History>)transmittedData.DataStorage.Get("historyApplications");
 
             int countHistoriesLogic = (int)transmittedData.DataStorage.Get("countHistoriesLogic");
             int currentHistoriesLogic = (int)transmittedData.DataStorage.Get("currentHistoriesLogic");
@@ -173,7 +173,7 @@ public class HistoryLogic
 
             transmittedData.DataStorage.Add("currentHistoriesLogic", currentHistoriesLogic);
 
-            HistoryApplication currentHistories = historyApplications[currentHistoriesLogic - 1];
+            History currentHistories = historyApplications[currentHistoriesLogic - 1];
 
             textFromUser =
                 $"userId:{currentHistories.UserId}\nid:{currentHistories.Id}\ntitle:{currentHistories.Title}\nbody:{currentHistories.Title}";

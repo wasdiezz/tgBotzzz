@@ -2,16 +2,17 @@
 using tgBot.org.example.ApiWorker;
 using tgBot.org.example.Buttons;
 using tgBot.org.example.statemachine;
+using ApplicationId = tgBot.org.example.ApiWorker.ApplicationId;
 
 namespace tgBot.org.example.service.logic;
 
 public class ApplicationLogic
 {
-    private ApplicationApiWorker _applicationApiWorker;
+    private ApiWorker.ApiWorker _apiWorker;
 
     public ApplicationLogic()
     {
-        _applicationApiWorker = new ApplicationApiWorker();
+        _apiWorker = new ApiWorker.ApiWorker();
     }
 
     #region ввод номера кабинета
@@ -114,6 +115,7 @@ public class ApplicationLogic
     }
 
     #endregion
+
     #region обработчик нажатия кнопок "хотите ли вы добавить фото?", если не добавили фото, то просто выводим данные заявки для верификации.
 
     public BotTextMessage ProcessWaitingQuestionAddPhoto(string textFromUser,
@@ -129,15 +131,15 @@ public class ApplicationLogic
 
         if (textFromUser.Equals(InlineButtonsStorage.YesSendPhoto.CallBackData))
         {
+            textFromUser = "Отправьте фото, чтобы прикрепить его к заявке";
+            
             if (string.IsNullOrEmpty(textFromUser))
             {
                 return new BotTextMessage("Сообщение не может быть пустое, отправьте фотографию");
             }
 
             transmittedData.State = State.WaitingPhoto;
-
-            textFromUser = "Отправьте фото, чтобы прикрепить его к заявке";
-
+            
             return new BotTextMessage(textFromUser);
         }
 
@@ -218,7 +220,7 @@ public class ApplicationLogic
         {
             transmittedData.State = State.WaitingReadApplication;
 
-            ApplicationEntity applicationEntity = new ApplicationEntity()
+            Application application = new Application()
             {
                 UserId = (long)transmittedData.DataStorage.Get("userId"),
                 AddressId = (int)transmittedData.DataStorage.Get("addressId"),
@@ -229,17 +231,18 @@ public class ApplicationLogic
                 Photo = (string)transmittedData.DataStorage.Get("imageUrl")
             };
 
-            _applicationApiWorker.AddNewApplication(applicationEntity);
+            _apiWorker.AddNewApplication(application);
+
+
+            // textFromUser =
+            //     $"UserId: {applicationEntity.UserId} \nAddressId: {applicationEntity.AddressId}, \nnumber cabinet: {applicationEntity.NumberCabinet}, \nfullname: {applicationEntity.FullName}, \nnumber phone: {applicationEntity.NumberPhone}, \ndescription problem: {applicationEntity.DescriptionProblem} \nurl photo: {applicationEntity.Photo}";
+
+            ApplicationId applicationId = _apiWorker.GetByIdApplication();
 
             textFromUser =
-                $"UserId: {applicationEntity.UserId} \nAddressId: {applicationEntity.AddressId}, \nnumber cabinet: {applicationEntity.NumberCabinet}, \nfullname: {applicationEntity.FullName}, \nnumber phone: {applicationEntity.NumberPhone}, \ndescription problem: {applicationEntity.DescriptionProblem} \nurl photo: {applicationEntity.Photo}";
+                $"Заявка {applicationId.Id} успешно создана! Вам придет уведомление, когда статус заявки будет изменен.";
 
             transmittedData.DataStorage.Clear();
-
-            //long userId = (long)transmittedData.DataStorage.Get("userId");
-            //_applicationApiWorker.GetByIdApplication(userId);
-
-            // textFromUser = $"Заявка {application.Id} успешно создана! Вам придет уведомление, когда статус заявки будет изменен.";
 
             return new BotTextMessage(textFromUser, InlineKeyboardsStorage.GetBackToMenuKeyboard);
         }
@@ -259,8 +262,9 @@ public class ApplicationLogic
     }
 
     #endregion
-    
+
     #region отправка в апи без фотки заявки
+
     public BotTextMessage ProcessWaitingDataVerificationWithoutPhoto(string textFromUser,
         TransmittedData transmittedData)
     {
@@ -276,7 +280,7 @@ public class ApplicationLogic
         {
             transmittedData.State = State.WaitingReadApplication;
 
-            ApplicationEntity applicationEntity = new ApplicationEntity()
+            Application application = new Application()
             {
                 UserId = (long)transmittedData.DataStorage.Get("userId"),
                 AddressId = (int)transmittedData.DataStorage.Get("addressId"),
@@ -287,15 +291,15 @@ public class ApplicationLogic
                 Photo = (string)transmittedData.DataStorage.Get("isNoPhoto")
             };
 
-            _applicationApiWorker.AddNewApplication(applicationEntity);
+            _apiWorker.AddNewApplication(application);
+
+            // textFromUser =
+            //     $"UserId: {application.UserId} \nAddressId: {application.AddressId}, \nnumber cabinet: {application.NumberCabinet}, \nfullname: {application.FullName}, \nnumber phone: {application.NumberPhone}, \ndescription problem: {application.DescriptionProblem} \nurl photo: {application.Photo}";
+
+            ApplicationId applicationId = _apiWorker.GetByIdApplication();
 
             textFromUser =
-                $"UserId: {applicationEntity.UserId} \nAddressId: {applicationEntity.AddressId}, \nnumber cabinet: {applicationEntity.NumberCabinet}, \nfullname: {applicationEntity.FullName}, \nnumber phone: {applicationEntity.NumberPhone}, \ndescription problem: {applicationEntity.DescriptionProblem} \nurl photo: {applicationEntity.Photo}";
-
-            //long userId = (long)transmittedData.DataStorage.Get("userId");
-            //_applicationApiWorker.GetByIdApplication(userId);
-
-            // textFromUser = $"Заявка {application.Id} успешно создана! Вам придет уведомление, когда статус заявки будет изменен.";
+                $"Заявка {applicationId.Id} успешно создана! Вам придет уведомление, когда статус заявки будет изменен.";
 
             transmittedData.DataStorage.Clear();
 
@@ -315,7 +319,7 @@ public class ApplicationLogic
 
         return new BotTextMessage(textFromUser);
     }
-    
+
     #endregion
 
     #region обработка нажатия кнопки главное меню после успешной подачи заявки

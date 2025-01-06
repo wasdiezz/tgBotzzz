@@ -1,21 +1,25 @@
 ﻿using System.Text;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace tgBot.org.example.ApiWorker;
 
-public class ApplicationApiWorker
+public class ApiWorker
 {
-    public ApplicationEntity GetByIdApplication(long id)
+    public ApplicationId GetByIdApplication()
     {
         HttpClient httpClient = new HttpClient();
-        string jsonAsString = httpClient.GetStringAsync($"https://jsonplaceholder.typicode.com/posts/{id}").Result;
 
-        ApplicationEntity applicationEntity = JsonSerializer.Deserialize<ApplicationEntity>(jsonAsString);
+        string jsonAsString = httpClient.GetStringAsync($"https://jsonplaceholder.typicode.com/posts/1").Result;
 
-        return applicationEntity;
+        JsonObject jsonObject = JsonObject.Parse(jsonAsString).AsObject();
+
+        int id = int.Parse(jsonObject["id"].ToString());
+
+        return new ApplicationId() { Id = id };
     }
 
-    public ApplicationEntity AddNewApplication(ApplicationEntity insertFakePost)
+    public Application AddNewApplication(Application insertFakePost)
     {
         HttpClient httpClient = new HttpClient();
         string insertFakePostAsJson = JsonSerializer.Serialize(insertFakePost);
@@ -25,18 +29,18 @@ public class ApplicationApiWorker
         string addedFakePostAsJson = httpClient.PostAsync("https://jsonplaceholder.typicode.com/posts", httpContent)
             .Result.Content.ReadAsStringAsync().Result;
 
-        ApplicationEntity addedFakePost = JsonSerializer.Deserialize<ApplicationEntity>(addedFakePostAsJson);
+        Application addedFakePost = JsonSerializer.Deserialize<Application>(addedFakePostAsJson);
 
         return addedFakePost;
     }
-    
-    public List<HistoryApplication> GetByAllApplication()
+
+    public List<History> GetByAllApplication()
     {
         HttpClient httpClient = new HttpClient();
         string jsonAsString = httpClient.GetStringAsync($"https://jsonplaceholder.typicode.com/posts/").Result;
 
-        List<HistoryApplication> historyApplications =
-            JsonSerializer.Deserialize<List<HistoryApplication>>(jsonAsString);
+        List<History> historyApplications =
+            JsonSerializer.Deserialize<List<History>>(jsonAsString);
 
         return historyApplications;
     }

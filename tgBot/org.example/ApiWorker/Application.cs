@@ -1,8 +1,7 @@
 ﻿namespace tgBot.org.example.ApiWorker;
 
-public class ApplicationEntity
+public class Application
 {
-    //[JsonPropertyName("id")] public string Id { get; set; }
     public long UserId { get; set; }
     public int AddressId { get; set; }
     public string NumberCabinet { get; set; }

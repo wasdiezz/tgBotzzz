@@ -1,18 +1,18 @@
-﻿using System.Runtime.InteropServices.JavaScript;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace tgBot.org.example.ApiWorker;
 
-public class HistoryApplication
+public class History
 {
-    // public int IdHistoryApplication { get; set; }
-    // public string Status { get; set; }
-    // public string Address { get; set; }
+    // public int Id { get; set; }
+    // public int ChatId { get; set; }
+    // public int AdressID { get; set; }
     // public string Cabinet { get; set; }
     // public string Fullname { get; set; }
-    // public string NumberPhone { get; set; }
-    // public DateTime DateTime { get; set; }
+    // public string PhoneNumber { get; set; }
     // public string Description { get; set; }
+    // public DateTime CreatedDateTime { get; set; }
+    // public int StatusId { get; set; }
 
     [JsonPropertyName("id")] public int Id { get; set; }
     [JsonPropertyName("title")] public string Title { get; set; }

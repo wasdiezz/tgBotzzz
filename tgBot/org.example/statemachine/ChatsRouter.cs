@@ -8,7 +8,7 @@ public class ChatsRouter
 {
     private Dictionary<long, TransmittedData> _routings;
     private ServiceManager _serviceManager;
-    
+
     private TelegramBotClient _botClient;
     private string _token = "8108328648:AAEc9MytfhK1aypmrQ__MUVBteFljBbo9zs";
 
@@ -30,7 +30,7 @@ public class ChatsRouter
 
         transmittedData.DataStorage.Add("userId", chatId);
 
-        if (photo != null)
+        if (photo != null && photo.Length > 0)
         {
             try
             {
