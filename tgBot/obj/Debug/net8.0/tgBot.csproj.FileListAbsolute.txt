@@ -3,7 +3,6 @@ C:\Users\Пользователь\RiderProjects\tgBot\tgBot\bin\Debug\net8.0\tgB
 C:\Users\Пользователь\RiderProjects\tgBot\tgBot\bin\Debug\net8.0\tgBot.runtimeconfig.json
 C:\Users\Пользователь\RiderProjects\tgBot\tgBot\bin\Debug\net8.0\tgBot.dll
 C:\Users\Пользователь\RiderProjects\tgBot\tgBot\bin\Debug\net8.0\tgBot.pdb
-C:\Users\Пользователь\RiderProjects\tgBot\tgBot\bin\Debug\net8.0\Newtonsoft.Json.dll
 C:\Users\Пользователь\RiderProjects\tgBot\tgBot\bin\Debug\net8.0\Telegram.Bot.dll
 C:\Users\Пользователь\RiderProjects\tgBot\tgBot\obj\Debug\net8.0\tgBot.csproj.AssemblyReference.cache
 C:\Users\Пользователь\RiderProjects\tgBot\tgBot\obj\Debug\net8.0\tgBot.GeneratedMSBuildEditorConfig.editorconfig

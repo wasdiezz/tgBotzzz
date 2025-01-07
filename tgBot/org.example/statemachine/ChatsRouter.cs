@@ -34,8 +34,7 @@ public class ChatsRouter
         {
             try
             {
-                var fileId = photo[photo.Length - 1].FileId;
-                var file = await _botClient.GetFileAsync(fileId);
+                var file = await _botClient.GetFileAsync(photo[photo.Length - 1].FileId);
 
                 var fileUrl = $"https://api.telegram.org/file/bot{_token}/{file.FilePath}";
 
@@ -45,10 +44,6 @@ public class ChatsRouter
             {
                 throw new Exception("Ошибка при обработке фото", ex);
             }
-        }
-        else
-        {
-            transmittedData.DataStorage.Add("isNoPhoto", "");
         }
 
         return _serviceManager.ProcessBotUpdate(textFromUser, transmittedData);

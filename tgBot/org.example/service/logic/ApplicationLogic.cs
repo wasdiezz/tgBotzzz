@@ -235,10 +235,10 @@ public class ApplicationLogic
 
 
             // textFromUser =
-            //     $"UserId: {applicationEntity.UserId} \nAddressId: {applicationEntity.AddressId}, \nnumber cabinet: {applicationEntity.NumberCabinet}, \nfullname: {applicationEntity.FullName}, \nnumber phone: {applicationEntity.NumberPhone}, \ndescription problem: {applicationEntity.DescriptionProblem} \nurl photo: {applicationEntity.Photo}";
+            //     $"UserId: {application.UserId} \nAddressId: {application.AddressId}, \nnumber cabinet: {application.NumberCabinet}, \nfullname: {application.FullName}, \nnumber phone: {application.NumberPhone}, \ndescription problem: {application.DescriptionProblem} \nurl photo: {application.Photo}";
 
             ApplicationId applicationId = _apiWorker.GetByIdApplication();
-
+            
             textFromUser =
                 $"Заявка {applicationId.Id} успешно создана! Вам придет уведомление, когда статус заявки будет изменен.";
 
@@ -288,7 +288,7 @@ public class ApplicationLogic
                 FullName = (string)transmittedData.DataStorage.Get("fullName"),
                 NumberPhone = (string)transmittedData.DataStorage.Get("numberPhone"),
                 DescriptionProblem = (string)transmittedData.DataStorage.Get("descriptionProblem"),
-                Photo = (string)transmittedData.DataStorage.Get("isNoPhoto")
+                Photo = ""
             };
 
             _apiWorker.AddNewApplication(application);
