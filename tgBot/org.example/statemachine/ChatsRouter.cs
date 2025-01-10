@@ -28,7 +28,7 @@ public class ChatsRouter
 
         TransmittedData transmittedData = _routings[chatId];
 
-        transmittedData.DataStorage.Add("userId", chatId);
+        transmittedData.DataStorage.Add("chatId", chatId);
 
         if (photo != null && photo.Length > 0)
         {
@@ -38,7 +38,7 @@ public class ChatsRouter
 
                 var fileUrl = $"https://api.telegram.org/file/bot{_token}/{file.FilePath}";
 
-                transmittedData.DataStorage.Add("imageUrl", fileUrl);
+                transmittedData.DataStorage.Add("photo", fileUrl);
             }
             catch (Exception ex)
             {

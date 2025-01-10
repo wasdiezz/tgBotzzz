@@ -31,7 +31,7 @@ public class ApplicationLogic
                 "Ошибка. Максимальная длина номера кабинета 50 символов. Пожалуйста, введите номер кабинета заново.");
         }
 
-        transmittedData.DataStorage.Add("cabinetNumber", textFromUser);
+        transmittedData.DataStorage.Add("cabinet", textFromUser);
 
         transmittedData.State = State.WaitingInputFullName;
 
@@ -80,7 +80,7 @@ public class ApplicationLogic
                 "Ошибка. Максимальная длина номера телефона 50 символов. Пожалуйста, введите номер телефона заново.");
         }
 
-        transmittedData.DataStorage.Add("numberPhone", textFromUser);
+        transmittedData.DataStorage.Add("phoneNumber", textFromUser);
 
         transmittedData.State = State.WaitingDescriptionProblem;
 
@@ -105,7 +105,7 @@ public class ApplicationLogic
                 "Ошибка. Максимальная длина для опсиания проблемы 100 символов. Пожалуйста, введите описание проблемы заново.");
         }
 
-        transmittedData.DataStorage.Add("descriptionProblem", textFromUser);
+        transmittedData.DataStorage.Add("description", textFromUser);
 
         transmittedData.State = State.WaitingQuestionAddPhoto;
 
@@ -132,14 +132,14 @@ public class ApplicationLogic
         if (textFromUser.Equals(InlineButtonsStorage.YesSendPhoto.CallBackData))
         {
             textFromUser = "Отправьте фото, чтобы прикрепить его к заявке";
-            
+
             if (string.IsNullOrEmpty(textFromUser))
             {
                 return new BotTextMessage("Сообщение не может быть пустое, отправьте фотографию");
             }
 
             transmittedData.State = State.WaitingPhoto;
-            
+
             return new BotTextMessage(textFromUser);
         }
 
@@ -150,15 +150,15 @@ public class ApplicationLogic
             stringBuilder.Append("Адрес: ").Append(transmittedData.DataStorage.Get("addressPlace"))
                 .Append("\n");
 
-            stringBuilder.Append("Номер кабинета: ").Append(transmittedData.DataStorage.Get("cabinetNumber"))
+            stringBuilder.Append("Номер кабинета: ").Append(transmittedData.DataStorage.Get("cabinet"))
                 .Append("\n");
 
             stringBuilder.Append("ФИО: ").Append(transmittedData.DataStorage.Get("fullName")).Append("\n");
 
-            stringBuilder.Append("Номер телефона: ").Append(transmittedData.DataStorage.Get("numberPhone"))
+            stringBuilder.Append("Номер телефона: ").Append(transmittedData.DataStorage.Get("phoneNumber"))
                 .Append("\n");
 
-            stringBuilder.Append("Описание проблемы: ").Append(transmittedData.DataStorage.Get("descriptionProblem"))
+            stringBuilder.Append("Описание проблемы: ").Append(transmittedData.DataStorage.Get("description"))
                 .Append("\n");
 
             textFromUser = stringBuilder.ToString();
@@ -183,15 +183,15 @@ public class ApplicationLogic
         stringBuilder.Append("Адрес: ").Append(transmittedData.DataStorage.Get("addressPlace"))
             .Append("\n");
 
-        stringBuilder.Append("Номер кабинета: ").Append(transmittedData.DataStorage.Get("cabinetNumber"))
+        stringBuilder.Append("Номер кабинета: ").Append(transmittedData.DataStorage.Get("cabinet"))
             .Append("\n");
 
         stringBuilder.Append("ФИО: ").Append(transmittedData.DataStorage.Get("fullName")).Append("\n");
 
-        stringBuilder.Append("Номер телефона: ").Append(transmittedData.DataStorage.Get("numberPhone"))
+        stringBuilder.Append("Номер телефона: ").Append(transmittedData.DataStorage.Get("phoneNumber"))
             .Append("\n");
 
-        stringBuilder.Append("Описание проблемы: ").Append(transmittedData.DataStorage.Get("descriptionProblem"))
+        stringBuilder.Append("Описание проблемы: ").Append(transmittedData.DataStorage.Get("description"))
             .Append("\n");
 
         textFromUser = stringBuilder.ToString();
@@ -222,13 +222,13 @@ public class ApplicationLogic
 
             Application application = new Application()
             {
-                UserId = (long)transmittedData.DataStorage.Get("userId"),
+                UserId = (long)transmittedData.DataStorage.Get("chatId"),
                 AddressId = (int)transmittedData.DataStorage.Get("addressId"),
-                NumberCabinet = (string)transmittedData.DataStorage.Get("cabinetNumber"),
+                NumberCabinet = (string)transmittedData.DataStorage.Get("cabinet"),
                 FullName = (string)transmittedData.DataStorage.Get("fullName"),
-                NumberPhone = (string)transmittedData.DataStorage.Get("numberPhone"),
-                DescriptionProblem = (string)transmittedData.DataStorage.Get("descriptionProblem"),
-                Photo = (string)transmittedData.DataStorage.Get("imageUrl")
+                NumberPhone = (string)transmittedData.DataStorage.Get("phoneNumber"),
+                DescriptionProblem = (string)transmittedData.DataStorage.Get("description"),
+                Photo = (string)transmittedData.DataStorage.Get("photo")
             };
 
             _apiWorker.AddNewApplication(application);
@@ -238,7 +238,7 @@ public class ApplicationLogic
             //     $"UserId: {application.UserId} \nAddressId: {application.AddressId}, \nnumber cabinet: {application.NumberCabinet}, \nfullname: {application.FullName}, \nnumber phone: {application.NumberPhone}, \ndescription problem: {application.DescriptionProblem} \nurl photo: {application.Photo}";
 
             ApplicationId applicationId = _apiWorker.GetByIdApplication();
-            
+
             textFromUser =
                 $"Заявка {applicationId.Id} успешно создана! Вам придет уведомление, когда статус заявки будет изменен.";
 
@@ -282,12 +282,12 @@ public class ApplicationLogic
 
             Application application = new Application()
             {
-                UserId = (long)transmittedData.DataStorage.Get("userId"),
+                UserId = (long)transmittedData.DataStorage.Get("chatId"),
                 AddressId = (int)transmittedData.DataStorage.Get("addressId"),
-                NumberCabinet = (string)transmittedData.DataStorage.Get("cabinetNumber"),
+                NumberCabinet = (string)transmittedData.DataStorage.Get("cabinet"),
                 FullName = (string)transmittedData.DataStorage.Get("fullName"),
-                NumberPhone = (string)transmittedData.DataStorage.Get("numberPhone"),
-                DescriptionProblem = (string)transmittedData.DataStorage.Get("descriptionProblem"),
+                NumberPhone = (string)transmittedData.DataStorage.Get("phoneNumber"),
+                DescriptionProblem = (string)transmittedData.DataStorage.Get("description"),
                 Photo = ""
             };
 
