@@ -224,21 +224,20 @@ public class ApplicationLogic
             {
                 UserId = (long)transmittedData.DataStorage.Get("chatId"),
                 AddressId = (int)transmittedData.DataStorage.Get("addressId"),
-                NumberCabinet = (string)transmittedData.DataStorage.Get("cabinet"),
-                FullName = (string)transmittedData.DataStorage.Get("fullName"),
-                NumberPhone = (string)transmittedData.DataStorage.Get("phoneNumber"),
-                DescriptionProblem = (string)transmittedData.DataStorage.Get("description"),
+                Cabinet = (string)transmittedData.DataStorage.Get("cabinet"),
+                Fullname = (string)transmittedData.DataStorage.Get("fullName"),
+                PhoneNumber = (string)transmittedData.DataStorage.Get("phoneNumber"),
+                Description = (string)transmittedData.DataStorage.Get("description"),
                 Photo = (string)transmittedData.DataStorage.Get("photo")
             };
 
             _apiWorker.AddNewApplication(application);
-
-
+            
             // textFromUser =
-            //     $"UserId: {application.UserId} \nAddressId: {application.AddressId}, \nnumber cabinet: {application.NumberCabinet}, \nfullname: {application.FullName}, \nnumber phone: {application.NumberPhone}, \ndescription problem: {application.DescriptionProblem} \nurl photo: {application.Photo}";
+            //     $"UserId: {application.UserId} \nAddressId: {application.AddressId}, \nnumber cabinet: {application.Cabinet}, \nfullname: {application.Fullname}, \nnumber phone: {application.PhoneNumber}, \ndescription problem: {application.Description} \nurl photo: {application.Photo}";
 
             ApplicationId applicationId = _apiWorker.GetByIdApplication();
-
+            
             textFromUser =
                 $"Заявка {applicationId.Id} успешно создана! Вам придет уведомление, когда статус заявки будет изменен.";
 
@@ -284,10 +283,10 @@ public class ApplicationLogic
             {
                 UserId = (long)transmittedData.DataStorage.Get("chatId"),
                 AddressId = (int)transmittedData.DataStorage.Get("addressId"),
-                NumberCabinet = (string)transmittedData.DataStorage.Get("cabinet"),
-                FullName = (string)transmittedData.DataStorage.Get("fullName"),
-                NumberPhone = (string)transmittedData.DataStorage.Get("phoneNumber"),
-                DescriptionProblem = (string)transmittedData.DataStorage.Get("description"),
+                Cabinet = (string)transmittedData.DataStorage.Get("cabinet"),
+                Fullname = (string)transmittedData.DataStorage.Get("fullName"),
+                PhoneNumber = (string)transmittedData.DataStorage.Get("phoneNumber"),
+                Description = (string)transmittedData.DataStorage.Get("description"),
                 Photo = ""
             };
 

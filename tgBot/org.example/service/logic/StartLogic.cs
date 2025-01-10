@@ -72,7 +72,7 @@ public class StartLogic
 
         if (textFromUser.Equals(InlineButtonsStorage.SubmitHistory.CallBackData))
         {
-            long userId = (long)transmittedData.DataStorage.Get("userId");
+            long chatId = (long)transmittedData.DataStorage.Get("chatId");
 
             List<History> historyApplications = _apiWorker.GetByAllApplication();
 

@@ -5,8 +5,8 @@ namespace tgBot.org.example.ApiWorker;
 public class History
 {
     // public int Id { get; set; }
-    // public int ChatId { get; set; }
-    // public int AdressID { get; set; }
+    // public long ChatId { get; set; }
+    // public int AddressId { get; set; }
     // public string Cabinet { get; set; }
     // public string Fullname { get; set; }
     // public string PhoneNumber { get; set; }
