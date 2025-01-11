@@ -115,7 +115,6 @@ public class ApplicationLogic
     }
 
     #endregion
-
     #region обработчик нажатия кнопок "хотите ли вы добавить фото?", если не добавили фото, то просто выводим данные заявки для верификации.
 
     public BotTextMessage ProcessWaitingQuestionAddPhoto(string textFromUser,
