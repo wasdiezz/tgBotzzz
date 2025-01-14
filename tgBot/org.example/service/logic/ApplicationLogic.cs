@@ -217,7 +217,7 @@ public class ApplicationLogic
 
         if (textFromUser.Equals(InlineButtonsStorage.SendApplication.CallBackData))
         {
-            transmittedData.State = State.WaitingReadApplication;
+            transmittedData.State = State.WaitingOutputID;
 
             Application application = new Application()
             {
@@ -236,11 +236,11 @@ public class ApplicationLogic
             //     $"UserId: {application.UserId} \nAddressId: {application.AddressId}, \nnumber cabinet: {application.Cabinet}, \nfullname: {application.Fullname}, \nnumber phone: {application.PhoneNumber}, \ndescription problem: {application.Description} \nurl photo: {application.Photo}";
 
             ApplicationId applicationId = _apiWorker.GetByIdApplication();
-            
-            textFromUser =
-                $"Заявка {applicationId.Id} успешно создана! Вам придет уведомление, когда статус заявки будет изменен.";
+            //
+            // textFromUser =
+            //     $"Заявка {applicationId.Id} успешно создана! Вам придет уведомление, когда статус заявки будет изменен.";
 
-            transmittedData.DataStorage.Clear();
+            // transmittedData.DataStorage.Clear();
 
             return new BotTextMessage(textFromUser, InlineKeyboardsStorage.GetBackToMenuKeyboard);
         }
@@ -276,7 +276,7 @@ public class ApplicationLogic
 
         if (textFromUser.Equals(InlineButtonsStorage.SendApplication.CallBackData))
         {
-            transmittedData.State = State.WaitingReadApplication;
+            transmittedData.State = State.WaitingOutputID;
 
             Application application = new Application()
             {
@@ -295,13 +295,17 @@ public class ApplicationLogic
             //     $"UserId: {application.UserId} \nAddressId: {application.AddressId}, \nnumber cabinet: {application.NumberCabinet}, \nfullname: {application.FullName}, \nnumber phone: {application.NumberPhone}, \ndescription problem: {application.DescriptionProblem} \nurl photo: {application.Photo}";
 
             ApplicationId applicationId = _apiWorker.GetByIdApplication();
+            
+            //
+            // textFromUser =
+            //     $"Заявка {applicationId.Id} успешно создана! Вам придет уведомление, когда статус заявки будет изменен.";
 
-            textFromUser =
-                $"Заявка {applicationId.Id} успешно создана! Вам придет уведомление, когда статус заявки будет изменен.";
+            // transmittedData.DataStorage.Clear();
 
-            transmittedData.DataStorage.Clear();
+            textFromUser = "";
+            
 
-            return new BotTextMessage(textFromUser, InlineKeyboardsStorage.GetBackToMenuKeyboard);
+            return new (textFromUser ,InlineKeyboardsStorage.GetBackToMenuKeyboard);
         }
 
         if (textFromUser.Equals(InlineButtonsStorage.CancelApplication.CallBackData))
@@ -317,6 +321,23 @@ public class ApplicationLogic
 
         return new BotTextMessage(textFromUser);
     }
+
+    #endregion
+
+    #region outputID
+
+    public BotTextMessage ProcessWaitingOutputID(string textFromUser,
+        TransmittedData transmittedData)
+    {
+        transmittedData.State = State.WaitingReadApplication;
+        ApplicationId applicationId = _apiWorker.GetByIdApplication();
+
+        textFromUser =
+            $"Заявка {applicationId.Id} успешно создана! Вам придет уведомление, когда статус заявки будет изменен.";
+        transmittedData.DataStorage.Clear();
+        return (new BotTextMessage(textFromUser, InlineKeyboardsStorage.GetBackToMenuKeyboard));
+    }
+    
 
     #endregion
 

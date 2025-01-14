@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Пользователь\\RiderProjects\\tgBot\\tgBot\\tgBot.csproj": {}
+    "C:\\Users\\vkave\\RiderProjects\\tgasdot\\tgBot\\tgBot.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Пользователь\\RiderProjects\\tgBot\\tgBot\\tgBot.csproj": {
+    "C:\\Users\\vkave\\RiderProjects\\tgasdot\\tgBot\\tgBot.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Пользователь\\RiderProjects\\tgBot\\tgBot\\tgBot.csproj",
+        "projectUniqueName": "C:\\Users\\vkave\\RiderProjects\\tgasdot\\tgBot\\tgBot.csproj",
         "projectName": "tgBot",
-        "projectPath": "C:\\Users\\Пользователь\\RiderProjects\\tgBot\\tgBot\\tgBot.csproj",
-        "packagesPath": "C:\\Users\\Пользователь\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Пользователь\\RiderProjects\\tgBot\\tgBot\\obj\\",
+        "projectPath": "C:\\Users\\vkave\\RiderProjects\\tgasdot\\tgBot\\tgBot.csproj",
+        "packagesPath": "C:\\Users\\vkave\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\vkave\\RiderProjects\\tgasdot\\tgBot\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Пользователь\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\vkave\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -70,7 +70,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

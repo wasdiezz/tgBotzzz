@@ -49,6 +49,7 @@ public enum State
     WaitingDataVerification,
     WaitingDataVerificationWithoutPhoto,
     WaitingReadApplication,
+    WaitingOutputID,
 
     #endregion
 
